@@ -21,7 +21,8 @@ close all;
 %% Extract Positions
 
 particleSiz = 7; %3 original, 5 good
-brightThreshold = 7000; %200 original, 5000 good
+brightThreshold = 5; %200 original, 5000 good, 5 for dim movies.
+offsetCorr = 1; % 1 if doing offset correction; 0 if not.
 
 showplot = 1;
 showFit = 0; %0
@@ -39,8 +40,12 @@ for z = 1:numFiles
         %for frameIndex = 1:1
         img = mov(:,:,frameIndex);
         
+        % offset correction (if applicable)
+        if offsetCorr == 1
+            imgoc = offsetcorr(img);
+        end
         % bandpass filter image
-        imgb = bpass(double(img),1,particleSiz);
+        imgb = bpass(double(imgoc),1,particleSiz);
 
         % find peaks
         pk = pkfnd(double(imgb),brightThreshold,particleSiz);
