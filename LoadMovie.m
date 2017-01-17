@@ -52,8 +52,8 @@ try
     movFile = mmreader(fullfile(filepath,filename));
     frameDuration = movFile.FrameRate;
 catch
-    disp('no frame rate found... using 0.032 s');
-    frameDuration= 0.032;
+    disp('no frame rate found... using 0.010 s');
+    frameDuration= 0.010;
 end
 
 
