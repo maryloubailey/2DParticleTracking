@@ -22,7 +22,7 @@ close all;
 
 particleSiz = 7; %3 original, 5 good
 brightThreshold = 5; %200 original, 5000 good, 5 for dim movies.
-offsetCorr = 1; % 1 if doing offset correction; 0 if not.
+offsetCorr = 0; % 1 if doing offset correction; 0 if not.
 
 showplot = 1;
 showFit = 0; %0
@@ -36,6 +36,7 @@ for z = 1:numFiles
     fits = []; %array containing number of fitted centroids for each frame
     % get flurophore positions
     pixelPos = [];
+    %pixelPosfinal = [];
     for frameIndex = 1:numFrames 
         %for frameIndex = 1:1
         img = mov(:,:,frameIndex);
@@ -125,8 +126,8 @@ for z = 1:numFiles
             % show movie with fitted centroids
             if showplot == 1
                 %img = mov(:,:,frameIndex); %
-                figure(2); cla; hold on;
-                %figure; cla; hold on;
+                %figure(2); cla; hold on;
+                figure; cla; hold on;
                 imagesc(img); colormap gray;
                 scatter(centroid(:,1),centroid(:,2),200,'gs');
                 %scatter(cnt(badIndex,1),cnt(badIndex,2),200,'rs');
@@ -147,10 +148,17 @@ for z = 1:numFiles
         end        
     end
     
+    
+   
     % save centroid positions
     dlmwrite(fullfile(dirpath,'pixelPositions.txt'),pixelPos,'delimiter','\t','newline','pc');
     dlmwrite(fullfile(dirpath,'parameters.txt'),set_parameters,'delimiter','\t','newline','pc');
     dlmwrite(fullfile(dirpath,'fits.txt'),fits,'delimiter','\t','newline','pc');
     toc
 end
+
+
+
+
+
 
